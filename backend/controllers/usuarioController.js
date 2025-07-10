@@ -5,13 +5,21 @@ const jwt = require('jsonwebtoken');
 // ✅ Registro de usuario
 exports.registrar = (req, res) => {
   const data = req.body;
+
+  data.rol = data.tipo;
+  delete data.tipo;
+
   data.contrasena = bcrypt.hashSync(data.contrasena, 10); 
 
   Usuario.crear(data, (err, result) => {
-    if (err) return res.status(500).send(err);
-    res.json({ mensaje: '✅ Usuario registrado' });
+    if (err) {
+      console.error("❌ Error en Usuario.crear:", err.sqlMessage || err);
+      return res.status(500).json({ error: err.sqlMessage || 'Error en el servidor' });
+    }
+    res.json({ mensaje: '✅ Usuario registrado', result });
   });
 };
+
 
 // ✅ Inicio de sesión y respuesta con datos completos
 exports.login = (req, res) => {
