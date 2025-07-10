@@ -11,8 +11,8 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) {
-    console.error('❌ Error al conectar a la base de datos:', err);
-    return;
+    console.error('❌ Error al conectar a la base de datos:', err.message);
+    process.exit(1); // 🚨 Detiene la app si no hay conexión
   }
   console.log('✅ Conectado a la base de datos MySQL en Railway');
 });
