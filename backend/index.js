@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+console.log("🟢 Index.js cargado correctamente");
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -19,6 +21,8 @@ app.use('/api/compras', comprasRoutes);
 
 // Servir imágenes desde /uploads
 app.use('/uploads', express.static('uploads'));
+
+console.log("🕓 A punto de iniciar el servidor...");
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
