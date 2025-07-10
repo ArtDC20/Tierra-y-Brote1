@@ -4,21 +4,32 @@ const jwt = require('jsonwebtoken');
 
 // ✅ Registro de usuario
 exports.registrar = (req, res) => {
-  const data = req.body;
+  console.log("📥 Recibido en /register:", req.body);
 
-  data.rol = data.tipo;
-  delete data.tipo;
+  try {
+    const data = req.body;
 
-  data.contrasena = bcrypt.hashSync(data.contrasena, 10); 
+    // Asegurarse de que se envíe el campo correcto
+    data.rol = data.tipo;
+    delete data.tipo;
 
-  Usuario.crear(data, (err, result) => {
-    if (err) {
-      console.error("❌ Error en Usuario.crear:", err.sqlMessage || err);
-      return res.status(500).json({ error: err.sqlMessage || 'Error en el servidor' });
-    }
-    res.json({ mensaje: '✅ Usuario registrado', result });
-  });
+    data.contrasena = bcrypt.hashSync(data.contrasena, 10);
+
+    Usuario.crear(data, (err, result) => {
+      if (err) {
+        console.error("❌ Error SQL:", err.sqlMessage || err);
+        return res.status(500).json({ error: err.sqlMessage || err });
+      }
+      console.log("✅ Usuario insertado:", result);
+      res.json({ mensaje: 'Usuario registrado correctamente', result });
+    });
+
+  } catch (e) {
+    console.error("❌ Error inesperado:", e.message);
+    res.status(500).send('Error interno');
+  }
 };
+
 
 
 // ✅ Inicio de sesión y respuesta con datos completos
