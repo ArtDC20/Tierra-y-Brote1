@@ -172,7 +172,7 @@ const PlantList = () => {
 
           {planta.imagen_url && (
             <img
-              src={${baseURL}/uploads/${planta.imagen_url}}
+              src={planta.imagen_url}
               alt={planta.nombre}
               style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '10px' }}
             />
