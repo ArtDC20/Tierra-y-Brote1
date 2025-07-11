@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 
 exports.verificarToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // 🔥 extrae el token sin "Bearer"
+  const token = authHeader && authHeader.split(' ')[1]; 
 
   if (!token) return res.status(403).json({ mensaje: 'Token requerido' });
 
   try {
-    console.log('🔐 JWT_SECRET:', process.env.JWT_SECRET); // Agrega esto
+    console.log('🔐 JWT_SECRET:', process.env.JWT_SECRET); 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.usuario = decoded;
     next();
