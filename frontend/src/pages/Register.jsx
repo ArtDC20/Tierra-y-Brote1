@@ -34,9 +34,11 @@ const Register = () => {
       <input name="contrasena" placeholder="Contraseña" type="password" onChange={handleChange} required />
       <input name="direccion" placeholder="Dirección" onChange={handleChange} />
       <input name="telefono" placeholder="Teléfono" onChange={handleChange} />
+      <input type="hidden" name="rol" value="usuario" />
       <button type="submit">Registrarse</button>
     </form>
   );
+
 };
 
 export default Register;
