@@ -11,6 +11,7 @@ const PlantList = () => {
 
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const rol = usuario?.rol || '';
+  const token = usuario?.token || '';
   const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
   useEffect(() => {
@@ -36,13 +37,20 @@ const PlantList = () => {
   const agregarAlCarrito = async (planta) => {
     const cantidad = parseInt(cantidadesAgregar[planta.id] || 1);
     if (isNaN(cantidad) || cantidad <= 0) return alert('⚠️ Ingresa una cantidad válida');
-
     if (cantidad > planta.stock) return alert('⚠️ Stock insuficiente');
 
     const nuevoStock = planta.stock - cantidad;
 
     try {
-      await api.put(`/plantas/${planta.id}`, { ...planta, stock: nuevoStock });
+      await api.put(
+        `/plantas/${planta.id}`,
+        { ...planta, stock: nuevoStock },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
       addToCart(planta, cantidad);
       setPlantas(plantas.map(p => p.id === planta.id ? { ...p, stock: nuevoStock } : p));
       setCantidadesAgregar({ ...cantidadesAgregar, [planta.id]: '' });
@@ -55,13 +63,20 @@ const PlantList = () => {
   const reducirStock = async (planta) => {
     const cantidad = parseInt(cantidadesReducir[planta.id] || 1);
     if (isNaN(cantidad) || cantidad <= 0) return alert('⚠️ Ingresa una cantidad válida');
-
     if (cantidad > planta.stock) return alert('⚠️ Stock insuficiente para reducir');
 
     const nuevoStock = planta.stock - cantidad;
 
     try {
-      await api.put(`/plantas/${planta.id}`, { ...planta, stock: nuevoStock });
+      await api.put(
+        `/plantas/${planta.id}`,
+        { ...planta, stock: nuevoStock },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
       alert(`✅ Stock reducido en ${cantidad} unidades`);
       setPlantas(plantas.map(p => p.id === planta.id ? { ...p, stock: nuevoStock } : p));
       setCantidadesReducir({ ...cantidadesReducir, [planta.id]: '' });
@@ -74,7 +89,11 @@ const PlantList = () => {
   const eliminarPlanta = async (id) => {
     if (window.confirm('¿Deseas eliminar esta planta?')) {
       try {
-        await api.delete(`/plantas/${id}`);
+        await api.delete(`/plantas/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         alert('🗑️ Planta eliminada');
         setPlantas(plantas.filter(p => p.id !== id));
       } catch (error) {
