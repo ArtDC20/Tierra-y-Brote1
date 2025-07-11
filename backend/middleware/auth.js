@@ -7,6 +7,7 @@ exports.verificarToken = (req, res, next) => {
   if (!token) return res.status(403).json({ mensaje: 'Token requerido' });
 
   try {
+    console.log('🔐 JWT_SECRET:', process.env.JWT_SECRET); // Agrega esto
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.usuario = decoded;
     next();
