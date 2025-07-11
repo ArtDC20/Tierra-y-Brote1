@@ -34,7 +34,8 @@ const PlantForm = () => {
     }
 
     try {
-      const token = localStorage.getItem('token');
+      const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+      const token = usuario?.token;
       await api.post('/plantas', formData, {
         headers: {
           Authorization: `Bearer ${token}`
