@@ -18,14 +18,18 @@ exports.crearPlanta = (req, res) => {
 
 // Crear planta con imagen
 exports.crearPlantaConImagen = (data, res) => {
+  if (!data.imagen_url) {
+    return res.status(400).json({ mensaje: '⚠️ Imagen no subida correctamente' });
+  }
+
   Planta.crear(data, (err, result) => {
     if (err) return res.status(500).send(err);
-    res.json({ mensaje: '✅ Planta creada con imagen' });
+    res.json({ mensaje: '✅ Planta creada con imagen', planta: result });
   });
 };
 
+
 // Actualizar planta
-// controllers/plantaController.js
 
 exports.actualizarPlanta = (req, res) => {
   const id = req.params.id;
