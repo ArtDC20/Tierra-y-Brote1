@@ -9,9 +9,8 @@ exports.registrar = (req, res) => {
   try {
     const data = req.body;
 
-    // Asegurarse de que se envíe el campo correcto
-    data.rol = data.tipo;
-    delete data.tipo;
+    // Establecer rol por defecto si no viene
+    if (!data.rol) data.rol = 'usuario';
 
     data.contrasena = bcrypt.hashSync(data.contrasena, 10);
 
@@ -29,6 +28,7 @@ exports.registrar = (req, res) => {
     res.status(500).send('Error interno');
   }
 };
+
 
 
 
