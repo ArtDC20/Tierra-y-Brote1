@@ -16,7 +16,12 @@ const Login = () => {
         contrasena: contrasena.trim()
       });
 
-      alert(`✅ Bienvenido ${res.data.usuario.nombre}`);
+      const { token, usuario } = res.data;
+      usuario.token = token;
+
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+      alert(`✅ Bienvenido ${usuario.nombre}`);
+
 
       // ✅ Guardar token dentro del objeto usuario
       localStorage.setItem('usuario', JSON.stringify({
