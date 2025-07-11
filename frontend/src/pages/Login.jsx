@@ -23,7 +23,7 @@ const Login = () => {
       alert(`✅ Bienvenido ${usuario.nombre}`);
 
 
-      // ✅ Guardar token dentro del objeto usuario
+ 
       localStorage.setItem('usuario', JSON.stringify({
         ...res.data.usuario,
         token: res.data.token
