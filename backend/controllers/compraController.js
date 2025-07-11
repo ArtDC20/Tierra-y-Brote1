@@ -1,7 +1,6 @@
 const Compra = require('../models/Compra');
 const db = require('../config/db');
 
-// 👉 Finalizar compra (ya existente)
 exports.finalizarCompra = (req, res) => {
   const { cliente, productos, total } = req.body;
   const id_usuario = cliente.id; 
