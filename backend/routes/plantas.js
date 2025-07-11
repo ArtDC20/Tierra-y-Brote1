@@ -20,7 +20,7 @@ router.post('/', verificarToken, verificarAdmin, upload.single('imagen'), (req, 
 });
 
 // Actualizar planta
-router.put('/:id', verificarToken, plantaCtrl.actualizarPlanta);
+router.put('/:id', verificarToken, verificarAdmin, upload.single('imagen'), plantaCtrl.actualizarPlanta);
 
 // Eliminar planta
 router.delete('/:id', verificarToken, verificarAdmin, plantaCtrl.eliminarPlanta);
