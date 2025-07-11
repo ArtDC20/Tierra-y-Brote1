@@ -5,7 +5,7 @@ const Register = () => {
   const [form, setForm] = useState({
     nombre: '',
     correo: '',
-    contrasena: '',  // ✅ sin ñ
+    contrasena: '', 
     direccion: '',
     telefono: ''
     rol: 'usuario'
