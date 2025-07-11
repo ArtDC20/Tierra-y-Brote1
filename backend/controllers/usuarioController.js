@@ -55,7 +55,7 @@ exports.login = (req, res) => {
       usuario: {
         id: user.id,
         nombre: user.nombre,
-        rol: user.rol === 'usuario' ? 'cliente' : user.rol,
+        rol: user.rol,
         correo: user.correo,
         direccion: user.direccion,
         telefono: user.telefono
