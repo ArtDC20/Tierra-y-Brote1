@@ -24,7 +24,7 @@ app.use('/uploads', express.static('uploads'));
 
 console.log("🕓 A punto de iniciar el servidor...");
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Backend corriendo en el puerto ${PORT}`);
