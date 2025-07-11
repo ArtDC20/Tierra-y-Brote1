@@ -8,7 +8,7 @@ const Register = () => {
     contrasena: '',  //
     direccion: '',
     telefono: '',
-    rol: 'usuario'
+    rol: 'usuario',
   });
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
