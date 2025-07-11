@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
     }
   }, [cart, userId]);
 
-  // ✅ Agregar cantidad específica
+
   const addToCart = (planta, cantidad = 1) => {
     const cantidadNum = parseInt(cantidad);
     if (!cantidadNum || cantidadNum <= 0) return;
@@ -43,7 +43,7 @@ export const CartProvider = ({ children }) => {
           if (item.cantidad > cantidad) {
             nuevoCarrito.push({ ...item, cantidad: item.cantidad - cantidad });
           }
-          // Si es igual o menor, no se agrega (se elimina completamente)
+   
         } else {
           nuevoCarrito.push(item);
         }
