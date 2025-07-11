@@ -12,7 +12,7 @@ const PlantList = () => {
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const rol = usuario?.rol || '';
   const token = usuario?.token || '';
-  const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+  const baseURL = 'https://tierra-y-brote-production.up.railway.app';
 
   useEffect(() => {
     const fetchPlantas = async () => {
