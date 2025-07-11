@@ -42,7 +42,7 @@ const EditPlantForm = ({ planta, onCancel, onSuccess }) => {
         }
       });
       alert('✅ Planta actualizada');
-      onUpdated(); // Refrescar la lista
+      onSuccess(); // Refrescar la lista
     } catch (err) {
       console.error(err);
       alert('❌ Error al actualizar planta');
