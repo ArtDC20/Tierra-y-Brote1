@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 
-const EditPlantForm = ({ planta, onCancel, onUpdated }) => {
+const EditPlantForm = ({ planta, onCancel, onSuccess }) => {
   const [form, setForm] = useState({
     nombre: planta.nombre,
     categoria: planta.categoria,
