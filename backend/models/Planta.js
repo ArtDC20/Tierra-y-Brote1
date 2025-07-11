@@ -8,7 +8,7 @@ const Planta = {
   obtenerPorId: (id, callback) => {
     db.query('SELECT * FROM plantas WHERE id = ?', [id], (err, results) => {
       if (err) return callback(err);
-      callback(null, results[0]); // Devuelve solo un resultado
+      callback(null, results[0]); 
     });
   },
 
