@@ -2,14 +2,14 @@ const Usuario = require('../models/Usuario');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// ✅ Registro de usuario
+
 exports.registrar = (req, res) => {
   console.log("📥 Recibido en /register:", req.body);
 
   try {
     const data = req.body;
 
-    // Establecer rol por defecto si no viene
+
     if (!data.rol) data.rol = 'usuario';
 
     data.contrasena = bcrypt.hashSync(data.contrasena, 10);
@@ -32,7 +32,7 @@ exports.registrar = (req, res) => {
 
 
 
-// ✅ Inicio de sesión y respuesta con datos completos
+
 exports.login = (req, res) => {
   const { correo, contrasena } = req.body; 
 
@@ -43,7 +43,7 @@ exports.login = (req, res) => {
     const match = bcrypt.compareSync(contrasena, user.contrasena); 
     if (!match) return res.status(401).send('Contraseña incorrecta');
 
-    // Token de autenticación
+
     const token = jwt.sign(
       { id: user.id, rol: user.rol, nombre: user.nombre },
        process.env.JWT_SECRET,
