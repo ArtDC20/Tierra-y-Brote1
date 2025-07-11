@@ -11,6 +11,7 @@ const PlantList = () => {
 
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const rol = usuario?.rol || '';
+  const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
   useEffect(() => {
     const fetchPlantas = async () => {
@@ -112,7 +113,7 @@ const PlantList = () => {
             <p>💲 <strong>{parseFloat(planta.precio).toFixed(2)}</strong> | Stock: {planta.stock}</p>
 
             <div className="acciones-stock">
-              {rol === 'cliente' && (
+              {rol === 'usuario' && (
                 <>
                   <input
                     type="number"
@@ -152,7 +153,7 @@ const PlantList = () => {
 
           {planta.imagen_url && (
             <img
-              src={`http://localhost:4000/uploads/${planta.imagen_url}`}
+              src={`${baseURL}/uploads/${planta.imagen_url}`}
               alt={planta.nombre}
               style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '10px' }}
             />
