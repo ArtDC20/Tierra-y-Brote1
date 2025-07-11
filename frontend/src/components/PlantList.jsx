@@ -121,7 +121,6 @@ const PlantList = () => {
                     onChange={e => handleReducirChange(planta.id, e.target.value)} />
                   <button onClick={() => reducirStock(planta)}>➖ Reducir</button>
                   <button onClick={() => eliminarPlanta(planta.id)}>🗑️ Eliminar</button>
-                  <button onClick={() => setPlantaEditando(planta)}>✏️ Editar</button>
                 </>
               )}
             </div>
