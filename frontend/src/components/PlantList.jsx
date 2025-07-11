@@ -1,19 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
 import api from '../services/api';
 import { CartContext } from '../context/CartContext';
-import EditPlantForm from './EditPlantForm';
 
 const PlantList = () => {
   const [plantas, setPlantas] = useState([]);
   const [categoria, setCategoria] = useState('Todas');
   const [cantidadesAgregar, setCantidadesAgregar] = useState({});
   const [cantidadesReducir, setCantidadesReducir] = useState({});
-  const [plantaEditando, setPlantaEditando] = useState(null);
-
   const { addToCart } = useContext(CartContext);
+
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const rol = usuario?.rol || '';
   const token = usuario?.token || '';
+  const baseURL = 'https://tierra-y-brote-production.up.railway.app';
 
   useEffect(() => {
     const fetchPlantas = async () => {
@@ -44,11 +43,11 @@ const PlantList = () => {
 
     try {
       await api.put(
-        `/plantas/${planta.id}`,
+        /plantas/${planta.id},
         { ...planta, stock: nuevoStock },
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: Bearer ${token}
           }
         }
       );
@@ -70,15 +69,15 @@ const PlantList = () => {
 
     try {
       await api.put(
-        `/plantas/${planta.id}`,
+        /plantas/${planta.id},
         { ...planta, stock: nuevoStock },
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: Bearer ${token}
           }
         }
       );
-      alert(`✅ Stock reducido en ${cantidad} unidades`);
+      alert(✅ Stock reducido en ${cantidad} unidades);
       setPlantas(plantas.map(p => p.id === planta.id ? { ...p, stock: nuevoStock } : p));
       setCantidadesReducir({ ...cantidadesReducir, [planta.id]: '' });
     } catch (error) {
@@ -90,9 +89,9 @@ const PlantList = () => {
   const eliminarPlanta = async (id) => {
     if (window.confirm('¿Deseas eliminar esta planta?')) {
       try {
-        await api.delete(`/plantas/${id}`, {
+        await api.delete(/plantas/${id}, {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: Bearer ${token}
           }
         });
         alert('🗑️ Planta eliminada');
@@ -102,20 +101,6 @@ const PlantList = () => {
         console.error(error);
       }
     }
-  };
-
-  const abrirFormularioEdicion = (planta) => {
-    setPlantaEditando(planta);
-  };
-
-  const cerrarFormularioEdicion = () => {
-    setPlantaEditando(null);
-  };
-
-  const actualizarLista = async () => {
-    const res = await api.get('/plantas');
-    setPlantas(res.data);
-    cerrarFormularioEdicion();
   };
 
   const plantasFiltradas = categoria === 'Todas'
@@ -180,10 +165,6 @@ const PlantList = () => {
                   <button className="btn btn-eliminar" onClick={() => eliminarPlanta(planta.id)}>
                     🗑️ Eliminar
                   </button>
-
-                  <button className="btn btn-editar" onClick={() => abrirFormularioEdicion(planta)}>
-                    ✏️ Editar
-                  </button>
                 </>
               )}
             </div>
@@ -191,22 +172,13 @@ const PlantList = () => {
 
           {planta.imagen_url && (
             <img
-              src={planta.imagen_url}
+              src={${baseURL}/uploads/${planta.imagen_url}}
               alt={planta.nombre}
               style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '10px' }}
             />
           )}
         </div>
       ))}
-
-      {/* Modal o Sección para editar */}
-      {plantaEditando && (
-        <EditPlantForm
-          planta={plantaEditando}
-          onCancel={cerrarFormularioEdicion}
-          onSuccess={actualizarLista}
-        />
-      )}
     </div>
   );
 };
