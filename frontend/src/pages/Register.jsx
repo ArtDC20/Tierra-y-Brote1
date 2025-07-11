@@ -7,8 +7,7 @@ const Register = () => {
     correo: '',
     contrasena: '',
     direccion: '',
-    telefono: '',
-    rol: 'usuario'
+    telefono: ''
   });
 
   const handleChange = (e) => {
