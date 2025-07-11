@@ -34,11 +34,10 @@ const PlantForm = () => {
     }
 
     try {
-      const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-      const token = usuario?.token;
+      const token = localStorage.getItem('token');
       await api.post('/plantas', formData, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: Bearer ${token}
         }
       });
       alert('✅ Planta agregada correctamente');
