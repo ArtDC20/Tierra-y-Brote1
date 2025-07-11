@@ -25,44 +25,47 @@ exports.crearPlantaConImagen = (data, res) => {
 };
 
 // Actualizar planta
+// controllers/plantaController.js
+
 exports.actualizarPlanta = (req, res) => {
   const id = req.params.id;
   const nuevaData = req.body;
-  const usuario = req.usuario;
+  const usuario = req.usuario;  // viene de verificarToken
 
-  // Verificamos si existe la planta
   Planta.obtenerPorId(id, (err, plantaActual) => {
     if (err) return res.status(500).send(err);
     if (!plantaActual) return res.status(404).json({ mensaje: 'Planta no encontrada' });
 
-    const rol = usuario.rol.toLowerCase(); // ⚠️ Normaliza a minúscula
+    const rol = (usuario.rol || '').toLowerCase();
 
-    if (rol === 'cliente') {
+    // Solo 'usuario' puede reducir stock
+    if (rol === 'usuario') {
       const nuevoStock = nuevaData.stock;
-
       if (typeof nuevoStock === 'undefined') {
         return res.status(400).json({ mensaje: '⚠️ Debes enviar el nuevo stock' });
       }
-
       if (nuevoStock >= plantaActual.stock) {
-        return res.status(403).json({ mensaje: '❌ No tienes permiso para aumentar el stock' });
+        return res.status(403).json({ mensaje: '❌ No puedes aumentar el stock' });
       }
-
-      Planta.actualizar(id, { stock: nuevoStock }, (err, result) => {
-        if (err) return res.status(500).send(err);
-        res.json({ mensaje: '✅ Stock reducido correctamente' });
+      Planta.actualizar(id, { stock: nuevoStock }, (err2) => {
+        if (err2) return res.status(500).send(err2);
+        return res.json({ mensaje: '✅ Stock reducido correctamente', stock: nuevoStock });
       });
 
+    // Admin puede modificar todo
     } else if (rol === 'admin') {
-      Planta.actualizar(id, nuevaData, (err, result) => {
-        if (err) return res.status(500).send(err);
-        res.json({ mensaje: '✏️ Planta actualizada correctamente' });
+      Planta.actualizar(id, nuevaData, (err2) => {
+        if (err2) return res.status(500).send(err2);
+        return res.json({ mensaje: '✏️ Planta actualizada correctamente' });
       });
+
+    // Cualquier otro rol
     } else {
-      res.status(403).json({ mensaje: '❌ Rol no autorizado' });
+      return res.status(403).json({ mensaje: '❌ Rol no autorizado' });
     }
   });
 };
+
 
 // Eliminar planta
 exports.eliminarPlanta = (req, res) => {
