@@ -52,14 +52,38 @@ const PlantForm = () => {
     <div className="container">
       <h2>➕ Agregar Planta</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data" className="card">
-        <input name="nombre" placeholder="Nombre" onChange={handleChange} required />
+        <input
+          name="nombre"
+          placeholder="Nombre"
+          onChange={handleChange}
+          required
+        />
         <select name="categoria" onChange={handleChange} value={form.categoria}>
           <option value="Ornamental">Ornamental</option>
           <option value="Medicinal">Medicinal</option>
         </select>
-        <textarea name="descripcion" placeholder="Descripción" onChange={handleChange} />
-        <input type="number" name="precio" placeholder="Precio" onChange={handleChange} required />
-        <input type="number" name="stock" placeholder="Stock" onChange={handleChange} required />
+        <textarea
+          name="descripcion"
+          placeholder="Descripción"
+          onChange={handleChange}
+        />
+        <input
+          type="number"
+          name="precio"
+          placeholder="Precio"
+          step="0.01"
+          min="0"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          name="stock"
+          placeholder="Stock"
+          min="0"
+          onChange={handleChange}
+          required
+        />
         <input type="file" accept="image/*" onChange={handleImageChange} />
         <button type="submit">Guardar</button>
       </form>
