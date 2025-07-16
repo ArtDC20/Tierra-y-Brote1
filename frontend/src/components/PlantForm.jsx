@@ -73,6 +73,8 @@ const PlantForm = () => {
           placeholder="Precio"
           step="0.01"
           min="0"
+          inputMode="decimal"
+          lang="en"
           onChange={handleChange}
           required
         />
