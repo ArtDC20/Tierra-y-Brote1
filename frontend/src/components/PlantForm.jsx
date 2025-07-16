@@ -22,7 +22,9 @@ const PlantForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
+    
+    form.precio = parseFloat(form.precio).toFixed(2);
+    
     const formData = new FormData();
     for (const key in form) {
       formData.append(key, form[key]);
