@@ -24,6 +24,12 @@ const PlantForm = () => {
     e.preventDefault();
     
     form.precio = parseFloat(form.precio).toFixed(2);
+
+    const precioValido = /^\d+(\.\d{1,2})?$/.test(form.precio);
+    if (!precioValido) {
+      alert('❌ Ingresa un precio válido con punto decimal, por ejemplo: 1.50');
+      return;
+    }
     
     const formData = new FormData();
     for (const key in form) {
@@ -68,9 +74,9 @@ const PlantForm = () => {
           onChange={handleChange}
         />
         <input
-          type="number"
+          type="text"
           name="precio"
-          placeholder="Precio"
+          placeholder="Precio (ej. 1.50)"
           step="0.01"
           min="0"
           inputMode="decimal"
