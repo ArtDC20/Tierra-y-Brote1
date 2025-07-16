@@ -76,7 +76,7 @@ const PlantForm = () => {
         <input
           type="text"
           name="precio"
-          placeholder="Precio (ej. 1.50)"
+          placeholder="Precio (ej. 1.60)"
           step="0.01"
           min="0"
           inputMode="decimal"
